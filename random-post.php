@@ -7,6 +7,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Disco Aleatorio</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <?php include 'includes/header.php'; ?>

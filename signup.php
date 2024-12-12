@@ -1,45 +1,56 @@
 <?php
-require 'config/database.php'; // Asegúrate de tener la conexión a la base de datos
+session_start();
+require 'config/database.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $nombre = $_POST['nombre'];
-    $apellidos = $_POST['apellidos'];
-    $password = $_POST['password']; // La contraseña que el usuario ingresa
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $nombre = trim($_POST['nombre']);
+    $apellidos = trim($_POST['apellidos']);
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
 
-    // Cifrado de la contraseña usando password_hash
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-    // Inserta el nuevo usuario en la base de datos
-    $stmt = $conn->prepare('INSERT INTO users_pec3 (username, nombre, apellidos, password) VALUES (:username, :nombre, :apellidos, :password)');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':nombre', $nombre);
-    $stmt->bindParam(':apellidos', $apellidos);
-    $stmt->bindParam(':password', $hashed_password);
-
-    if ($stmt->execute()) {
-        header('Location: index.php'); // Página de inicio al regitrarte
+    if ($password !== $password2) {
+        $error = "Las contraseñas no coinciden.";
     } else {
-        echo "Error al registrar usuario.";
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+        try {
+            $stmt = $conn->prepare("INSERT INTO users_pec3 (username, nombre, apellidos, password) VALUES (:username, :nombre, :apellidos, :password)");
+            $stmt->execute([
+                ':username' => $username,
+                ':nombre' => $nombre,
+                ':apellidos' => $apellidos,
+                ':password' => $hashed_password
+            ]);
+
+            header('Location: login.php');
+            exit;
+        } catch (PDOException $e) {
+            $error = "El nombre de usuario ya existe.";
+        }
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Document</title>
+    <title>Sign up</title>
 </head>
 <body>
-    </html>
     <?php include 'includes/header.php'; ?>
+    <h1>Registro de Usuario</h1>
+    <?php if ($error): ?>
+        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
     <form method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="text" name="apellidos" placeholder="Apellidos" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
+        <label>Username: <input type="text" name="username" required></label><br>
+        <label>Nombre: <input type="text" name="nombre" required></label><br>
+        <label>Apellidos: <input type="text" name="apellidos" required></label><br>
+        <label>Contraseña: <input type="password" name="password" required></label><br>
+        <label>Repetir Contraseña: <input type="password" name="password2" required></label><br>
         <button type="submit">Registrar</button>
     </form>
 </body>
+</html>

@@ -1,18 +1,13 @@
 <?php
-
-if (isset($_SESSION['username'])) {
-    header('Location: index.php'); // Si el usuario ya está logueado, redirigirlo a la página de inicio
-    exit();
-}
+session_start();
+require 'config/database.php';
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    require 'config/database.php'; // Asegúrate de tener la conexión a la base de datos
 
-    $username = $_POST['username'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    // Evitar SQL injection con consultas preparadas
     $stmt = $conn->prepare('SELECT * FROM users_pec3 WHERE username = :username LIMIT 1');
     $stmt->bindParam(':username', $username);
     $stmt->execute();
@@ -20,31 +15,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
-        // El password es válido, iniciar sesión
         $_SESSION['username'] = $user['username'];
         $_SESSION['nombre'] = $user['nombre'];
         $_SESSION['apellidos'] = $user['apellidos'];
-        header('Location: index.php'); // Redirigir a la página de inicio
+
+        header("Location: index.php");
         exit();
     } else {
-        $error = 'Credenciales inválidas';
+        $error = "Credenciales inválidas.";
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Login</title>
 </head>
 <body>
+    <?php include 'includes/header.php'; ?>
     <h1>Login</h1>
-    
     <?php if ($error): ?>
-        <p style="color:red;"><?php echo $error; ?></p>
+        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
     <?php endif; ?>
-    
     <form method="POST">
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" required><br><br>

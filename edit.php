@@ -1,6 +1,6 @@
 <?php
-session_start();
 require 'config/database.php';
+session_start();
 
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
@@ -8,44 +8,52 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
+$error = '';
+$success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $new_email = $_POST['email'];
-    $new_password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-    $stmt = $conn->prepare("UPDATE users SET email = :email, password = :password WHERE username = :username");
-    $stmt->bindParam(':email', $new_email);
-    $stmt->bindParam(':password', $new_password);
-    $stmt->bindParam(':username', $username);
+    $nombre = trim($_POST['nombre']);
+    $apellidos = trim($_POST['apellidos']);
+    $password = $_POST['password'];
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     try {
-        $stmt->execute();
+        $stmt = $conn->prepare("UPDATE users_pec3 SET nombre = :nombre, apellidos = :apellidos, password = :password WHERE username = :username");
+        $stmt->execute([
+            ':nombre' => $nombre,
+            ':apellidos' => $apellidos,
+            ':password' => $hashed_password,
+            ':username' => $username
+        ]);
+
         $success = "Perfil actualizado con éxito.";
     } catch (PDOException $e) {
-        $error = "Error al actualizar el perfil: " . $e->getMessage();
+        $error = "Error al actualizar el perfil.";
     }
 }
 
-$stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
-$stmt->bindParam(':username', $username);
-$stmt->execute();
+$stmt = $conn->prepare("SELECT nombre, apellidos FROM users_pec3 WHERE username = :username");
+$stmt->execute([':username' => $username]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Editar perfil</title>
+    <title>Editar Perfil</title>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
-    <h1>Editar perfil</h1>
-    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-    <?php if (isset($success)) echo "<p style='color:green;'>$success</p>"; ?>
+    <h1>Editar Perfil</h1>
+    <?php if ($error): ?>
+        <p style="color:red;"><?= $error ?></p>
+    <?php endif; ?>
+    <?php if ($success): ?>
+        <p style="color:green;"><?= $success ?></p>
+    <?php endif; ?>
     <form method="POST">
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
-        <label for="password">Nueva contraseña:</label>
-        <input type="password" id="password" name="password" required>
+        <label>Nombre: <input type="text" name="nombre" value="<?= htmlspecialchars($user['nombre']) ?>" required></label><br>
+        <label>Apellidos: <input type="text" name="apellidos" value="<?= htmlspecialchars($user['apellidos']) ?>" required></label><br>
+        <label>Nueva Contraseña: <input type="password" name="password" required></label><br>
         <button type="submit">Actualizar</button>
     </form>
 </body>

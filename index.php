@@ -1,14 +1,7 @@
 <?php
-session_start(); // Esto debe ir al principio del archivo PHP
-
-
-if (isset($_SESSION['username'])) {
-    echo "¡Hola! Nos alegra verte, " . $_SESSION['username'];
-} else {
-    echo "No estás logueado.";
-}
-
+session_start();
 require 'config/database.php';
+
 // Fijos
 $fixedDiscsStmt = $conn->query("SELECT * FROM vinyl_records WHERE id IN (1, 2)");
 $fixedDiscs = $fixedDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -16,13 +9,7 @@ $fixedDiscs = $fixedDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
 // Aleatorios
 $randomDiscsStmt = $conn->query("SELECT * FROM vinyl_records WHERE id NOT IN (1, 2) ORDER BY RAND() LIMIT 3");
 $randomDiscs = $randomDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -40,7 +27,7 @@ $randomDiscs = $randomDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="disco">
                 <img width="200px" src="<?= htmlspecialchars($record['cover_image']) ?>" alt="Portada del disco" class="cover">
                 <a href="post.php?id=<?= htmlspecialchars($record['id']) ?>">
-                <p><strong><?= htmlspecialchars($record['title']) ?></strong> - <?= htmlspecialchars($record['artist']) ?></p>
+                    <p><strong><?= htmlspecialchars($record['title']) ?></strong> - <?= htmlspecialchars($record['artist']) ?></p>
                 </a>
                 <p><?= htmlspecialchars($record['price']) ?>€</p>
             </div>
@@ -51,7 +38,7 @@ $randomDiscs = $randomDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="disco">
                 <img width="200px" src="<?= htmlspecialchars($record['cover_image']) ?>" alt="Portada del disco" class="cover">
                 <a href="post.php?id=<?= htmlspecialchars($record['id']) ?>">
-                <p><strong><?= htmlspecialchars($record['title']) ?></strong> - <?= htmlspecialchars($record['artist']) ?></p>
+                    <p><strong><?= htmlspecialchars($record['title']) ?></strong> - <?= htmlspecialchars($record['artist']) ?></p>
                 </a>
                 <p><?= htmlspecialchars($record['price']) ?>€</p>
             </div>
