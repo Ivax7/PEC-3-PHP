@@ -7,8 +7,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <a href="index.php">Home</a>
     <a href="random-post.php">Disco Aleatorio</a>
     <a href="records.php">Discos</a>
-    <a href="api/records.php" target="_blank">API_discos</a>
-    <a href="api/record.php" target="_blank">API_disco</a>
+    <a href="api/records.php/1" target="_blank">API_discos</a>
+    <a href="api/record.php/1" target="_blank">API_disco</a>
 
     <?php if (!isset($_SESSION['username'])): ?>
         <a href="login.php">Login</a>

@@ -12,7 +12,7 @@ $randomDiscs = $randomDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <link rel="stylesheet" href="css/styles.css">
     <title>Home</title>

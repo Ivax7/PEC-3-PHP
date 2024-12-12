@@ -39,6 +39,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="css/styles.css">
     <title>Editar Perfil</title>
 </head>
 <body>

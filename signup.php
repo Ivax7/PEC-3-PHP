@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':password' => $hashed_password
             ]);
 
-            header('Location: login.php');
+            header('Location: index.php');
             exit;
         } catch (PDOException $e) {
             $error = "El nombre de usuario ya existe.";

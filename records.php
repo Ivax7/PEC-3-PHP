@@ -103,7 +103,7 @@ $totalPages = ceil($totalRecords / $limit);
     </form>
     
     <!-- Listado de discos -->
-    <div class="discos-container">
+    <div class="discos-container-filtros">
         <?php foreach ($records as $record): ?>
             <div class="disco">
                 <img width="200px" src="<?= htmlspecialchars($record['cover_image']) ?>" alt="Portada del disco" class="cover">

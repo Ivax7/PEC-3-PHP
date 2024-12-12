@@ -14,12 +14,15 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     
     <h1>Disco Aleatorio</h1>
 
-    <img width="200px" src="<?= htmlspecialchars($record['cover_image']) ?>" alt="Portada del disco" class="cover">
-    <p>Titulo: <?=htmlspecialchars($record['title']) ?></p>
-    <p>Artista: <?=htmlspecialchars($record['artist']) ?></p>
-    <p>Género: <?=htmlspecialchars($record['genre']) ?></p>
-    <p>Año de lanzamiento: <?=htmlspecialchars($record['release_year']) ?></p>
-    <p>Estado: <?=htmlspecialchars($record['condition']) ?></p>
-    <p>Precio: <?=htmlspecialchars($record['price']) ?> €</p>
+    <div class="random-disco-container">
+        <img src="<?= htmlspecialchars($record['cover_image']) ?>" alt="Portada del disco" class="cover">
+        <p>Título: <?= htmlspecialchars($record['title']) ?></p>
+        <p>Artista: <?= htmlspecialchars($record['artist']) ?></p>
+        <p>Género: <?= htmlspecialchars($record['genre']) ?></p>
+        <p>Año de lanzamiento: <?= htmlspecialchars($record['release_year']) ?></p>
+        <p>Estado: <?= htmlspecialchars($record['condition']) ?></p>
+        <p>Precio: <?= htmlspecialchars($record['price']) ?> €</p>
+    </div>
+
 </body>
 </html>
