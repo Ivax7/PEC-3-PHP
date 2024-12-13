@@ -34,6 +34,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     </div>
 
     <a href="records.php">Volver a la lista</a>
-    
+
+  <?php include 'includes/footer.php'; ?>
 </body>
 </html>

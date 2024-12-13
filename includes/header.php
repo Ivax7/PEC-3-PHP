@@ -4,18 +4,20 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 <nav>
-    <a href="index.php">Home</a>
-    <a href="random-post.php">Disco Aleatorio</a>
-    <a href="records.php">Discos</a>
-    <a href="api/records.php/1" target="_blank">API_discos</a>
-    <a href="api/record.php/1" target="_blank">API_disco</a>
-
-    <?php if (!isset($_SESSION['username'])): ?>
-        <a href="login.php">Login</a>
-        <a href="signup.php">Sign up</a>
-    <?php else: ?>
-        <span>¡Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?>!</span>
-        <a href="edit.php">Perfil de usuario</a>
-        <a href="logout.php">Logout</a>
-    <?php endif; ?>
+    <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="random-post.php">Disco Aleatorio</a></li>
+        <li><a href="records.php">Discos</a></li>
+        <li><a href="api/records.php/1" target="_blank">API_discos</a></li>
+        <li><a href="api/record.php/1" target="_blank">API_disco</a></li>
+        
+        <?php if (!isset($_SESSION['username'])): ?>
+        <li><a href="login.php">Login</a></li>
+        <li><a href="signup.php">Sign up</a></li>
+        <?php else: ?>
+        <li><a href="edit.php">Perfil de usuario</a></li>
+        <li><a href="logout.php">Logout</a></li>
+        <?php endif; ?>
+    </ul>    
 </nav>
+    

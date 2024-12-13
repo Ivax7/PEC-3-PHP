@@ -36,6 +36,7 @@ $stmt = $conn->prepare("SELECT nombre, apellidos FROM users_pec3 WHERE username 
 $stmt->execute([':username' => $username]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,18 +45,21 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
-    <h1>Editar Perfil</h1>
-    <?php if ($error): ?>
-        <p style="color:red;"><?= $error ?></p>
-    <?php endif; ?>
-    <?php if ($success): ?>
-        <p style="color:green;"><?= $success ?></p>
-    <?php endif; ?>
-    <form method="POST">
-        <label>Nombre: <input type="text" name="nombre" value="<?= htmlspecialchars($user['nombre']) ?>" required></label><br>
-        <label>Apellidos: <input type="text" name="apellidos" value="<?= htmlspecialchars($user['apellidos']) ?>" required></label><br>
-        <label>Nueva Contraseña: <input type="password" name="password" required></label><br>
-        <button type="submit">Actualizar</button>
-    </form>
+    <main>
+        <h1>Editar Perfil</h1>
+        <?php if ($error): ?>
+            <p style="color:red;"><?= $error ?></p>
+        <?php endif; ?>
+        <?php if ($success): ?>
+            <p style="color:green;"><?= $success ?></p>
+        <?php endif; ?>
+        <form method="POST">
+            <label>Nombre: <input type="text" name="nombre" value="<?= htmlspecialchars($user['nombre']) ?>" required></label><br>
+            <label>Apellidos: <input type="text" name="apellidos" value="<?= htmlspecialchars($user['apellidos']) ?>" required></label><br>
+            <label>Nueva Contraseña: <input type="password" name="password" required></label><br>
+            <button type="submit">Actualizar</button>
+        </form>
+    </main>
+    <?php include 'includes/footer.php'; ?>
 </body>
 </html>

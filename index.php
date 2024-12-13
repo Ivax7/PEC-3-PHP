@@ -11,6 +11,7 @@ $randomDiscsStmt = $conn->query("SELECT * FROM vinyl_records WHERE id NOT IN (1,
 $randomDiscs = $randomDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,6 +20,11 @@ $randomDiscs = $randomDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
+
+    <?php if (!empty($_SESSION['nombre'])): ?>
+    <div class="welcome">¡Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?>!</div>
+    <?php endif; ?>
+
     <h1>Últimos Discos</h1>
     
     <div class="discos-container">
@@ -44,5 +50,8 @@ $randomDiscs = $randomDiscsStmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php endforeach; ?>
     </div>
+
+    <?php include 'includes/footer.php'; ?>
+
 </body>
 </html>

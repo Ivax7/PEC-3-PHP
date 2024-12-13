@@ -130,5 +130,7 @@ $totalPages = ceil($totalRecords / $limit);
             <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">Siguiente</a>
         <?php endif; ?>
     </div>
+    <?php include 'includes/footer.php'; ?>
+
 </body>
 </html>

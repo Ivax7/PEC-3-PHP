@@ -52,5 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Repetir Contraseña: <input type="password" name="password2" required></label><br>
         <button type="submit">Registrar</button>
     </form>
+
+    <?php include 'includes/footer.php'; ?>
+
 </body>
 </html>

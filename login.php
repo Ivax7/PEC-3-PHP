@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,18 +35,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
-    <h1>Login</h1>
-    <?php if ($error): ?>
-        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
-    <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br><br>
+    <main>
+        <h1>Login</h1>
+        <?php if ($error): ?>
+            <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required><br><br>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required><br><br>
 
-        <button type="submit">Login</button>
-    </form>
+            <button type="submit">Login</button>
+        </form>
+    </main>
+    <?php include 'includes/footer.php'; ?>
 </body>
-</html>
+

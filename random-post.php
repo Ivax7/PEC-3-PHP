@@ -16,13 +16,15 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <div class="random-disco-container">
         <img src="<?= htmlspecialchars($record['cover_image']) ?>" alt="Portada del disco" class="cover">
-        <p>Título: <?= htmlspecialchars($record['title']) ?></p>
-        <p>Artista: <?= htmlspecialchars($record['artist']) ?></p>
-        <p>Género: <?= htmlspecialchars($record['genre']) ?></p>
-        <p>Año de lanzamiento: <?= htmlspecialchars($record['release_year']) ?></p>
-        <p>Estado: <?= htmlspecialchars($record['condition']) ?></p>
-        <p>Precio: <?= htmlspecialchars($record['price']) ?> €</p>
+        <p><strong>Título:</strong> <?= htmlspecialchars($record['title']) ?></p>
+        <p><strong>Artista:</strong> <?= htmlspecialchars($record['artist']) ?></p>
+        <p><strong>Género:</strong> <?= htmlspecialchars($record['genre']) ?></p>
+        <p><strong>Año de lanzamiento:</strong> <?= htmlspecialchars($record['release_year']) ?></p>
+        <p><strong>Estado:</strong> <?= htmlspecialchars($record['condition']) ?></p>
+        <p><strong>Precio:</strong> <?= htmlspecialchars($record['price']) ?> €</p>
     </div>
+    
+    <?php include 'includes/footer.php'; ?>
 
 </body>
 </html>
